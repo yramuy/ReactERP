@@ -6,17 +6,20 @@ import Dashboard from "./components/layout/dashboard";
 import Users from "./components/pages/users";
 import Login from "./components/pages/login";
 import Logout from "./components/logout";
+import Protected from "./components/session/ProtectedRoute";
 
 function App() {
-  
+
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/users" element={<Users />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
+
+          <Route path="/" element={<Protected Component={Dashboard} />} />
+          <Route path="/users" element={<Protected Component={Users} />} />
+
         </Routes>
       </BrowserRouter>
     </div>

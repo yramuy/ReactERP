@@ -1,4 +1,7 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
 
@@ -6,6 +9,11 @@ const Sidebar = () => {
     const [isConfig, setIsConfig] = useState(false);
     const loginUser = sessionStorage.getItem('userName');
     const userRole = sessionStorage.getItem('userRole');
+    const userRoleId = sessionStorage.getItem('userRoleId');
+    const [menus, setMenus] = useState([]);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleClick = () => {
         setIsActive(!isActive);
@@ -14,6 +22,93 @@ const Sidebar = () => {
         setIsConfig(!isConfig);
 
     }
+
+    const response = useSelector((state) => {
+        return state.moduleData;
+    });
+
+    useEffect(() => {
+        GetMenus();
+    }, []);
+
+    const GetMenus = async () => {
+        try {
+
+            const body = JSON.stringify({
+                role_id: userRoleId,
+                parent_id: 0
+            });
+
+            const result = await axios.post('http://127.0.0.1:8000/api/menu', body, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            console.log("Menus ", result.data['mainMenus']);
+
+            if (result.data['status'] === 200) {
+                const menuData = result.data['mainMenus'];
+                // dispatch({ type: "RELOAD", payload: false });
+                setMenus(menuData)
+            }
+        } catch (error) {
+            setMenus([]);
+        }
+    }
+
+    const handleMenu = (id, url) => {
+        console.log(url)
+        dispatch({ type: "LEVELMENUID", payload: id });
+    }
+
+    const handleNavigate = (e, url) => {
+        // e.preventDefault();
+        navigate(`${url}`);
+    }
+
+    // Reusable component for menu items
+    const MenuItem = ({ menu, activeMenuId, onClick, handleNavigate }) => {
+        const isActive = menu.miID === activeMenuId || location.pathname === menu.url;
+        return (
+            <li key={menu.miID} className={isActive ? 'nav-item menu-open' : 'nav-item'} onClick={() => onClick(menu.miID)}>
+                <a href="javascript:void(0)" className={isActive ? 'nav-link active' : 'nav-link'} onClick={(e) => handleNavigate(e, menu.url)}>
+                    <i className={`nav-icon fas ${menu.icon}`}></i>
+                    <p>
+                        {menu.menu_name}
+                        {menu.subMenus.length > 0 && <i className="right fas fa-angle-left"></i>}
+                    </p>
+                </a>
+                {Array.isArray(menu.subMenus) && menu.subMenus.length > 0 && renderSubmenus(menu.subMenus, activeMenuId, onClick, handleNavigate)}
+            </li>
+        );
+    };
+
+    // Refactored renderSubmenus function
+    const renderSubmenus = (submenus, activeMenuId, onClick, handleNavigate) => (
+        <ul className="nav nav-treeview">
+            {submenus.map(submenu => (
+                <Submenu key={submenu.miID} submenu={submenu} activeMenuId={activeMenuId} onClick={onClick} handleNavigate={handleNavigate} />
+            ))}
+        </ul>
+    );
+
+    // Component to render submenus
+    const Submenu = ({ submenu, activeMenuId, onClick, handleNavigate }) => {
+        const isActive = submenu.miID === activeMenuId || location.pathname === submenu.url;
+        return (
+            <li key={submenu.miID} className={isActive ? 'nav-item menu-open' : 'nav-item'} onClick={() => onClick(submenu.miID)}>
+                <a href="javascript:void(0)" className={isActive ? 'nav-link active' : 'nav-link'} onClick={(e) => handleNavigate(e, submenu.url)}>
+                    <i className={`nav-icon fas ${submenu.icon}`}></i>
+                    <p>
+                        {submenu.menu_name}
+                        {Array.isArray(submenu.subMenus) && submenu.subMenus.length > 0 && <i className="right fas fa-angle-left"></i>}
+                    </p>
+                </a>
+                {Array.isArray(submenu.subMenus) && submenu.subMenus.length > 0 && renderSubmenus(submenu.subMenus, activeMenuId, onClick, handleNavigate)}
+            </li>
+        );
+    };
 
     return (
         <>
@@ -50,7 +145,12 @@ const Sidebar = () => {
 
                     {/* <!-- Sidebar Menu --> */}
                     <nav class="mt-2">
-                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                            {menus.map(menu => (
+                                <MenuItem key={menu.miID} menu={menu} activeMenuId={response['levelMenuID']} onClick={handleMenu} handleNavigate={handleNavigate} />
+                            ))}
+                        </ul>
+                        {/* <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                             <li class="nav-item">
                                 <a href="/" class="nav-link">
@@ -128,7 +228,7 @@ const Sidebar = () => {
                                 </ul>
                             </li>
 
-                        </ul>
+                        </ul> */}
                     </nav>
                     {/* <!-- /.sidebar-menu --> */}
                 </div>
