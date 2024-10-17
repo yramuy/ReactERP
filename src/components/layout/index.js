@@ -25,9 +25,12 @@ const Layout = ({ children }) => {
         }, 3000); // Adjust the duration as needed
     };
 
+    console.log("LOADING", response['loading']);
+
     return (
         <>
             <body class="hold-transition sidebar-mini layout-fixed">
+                {response['loading'] && <div class="loader"></div>}
                 <div class="wrapper">
                     <Header />
                     <Sidebar />

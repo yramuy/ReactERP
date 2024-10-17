@@ -11,7 +11,7 @@ export default function Protected(props) {
 
         console.log("Protected Route", login)
         if (login === "false" || login === null || login === "null") {
-            navigate("/", { replace: true });
+            navigate("/login", { replace: true });
         }
     }, []);
 

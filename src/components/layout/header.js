@@ -1,15 +1,25 @@
-// import { useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
+
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import MenuConfig from "../pages/menuconfig";
 
 const Header = () => {
-    // const navigate = useNavigate();
-    // const isLogin = sessionStorage.getItem('isLogin');
-    // useEffect(() => {
-    //     if (isLogin == 'false') {
-    //         console.log('isLogin: ', isLogin)
-    //         navigate('/login', { replace: true });
-    //     }
-    // }, []);
+
+    const [show, setShow] = useState(false);
+    const [text, setText] = useState('');
+    const dispatch = useDispatch();
+
+    const handleClose = () => {
+        setShow(false);
+    }
+
+    const handleScreen = (value) => {
+        setShow(true);
+        setText(value);
+        dispatch({ type: "STATUS", payload: true });
+        dispatch({ type: "ID", payload: 0 });
+    }
+
     return (
         <>
             {/* <!-- Navbar --> */}
@@ -24,6 +34,24 @@ const Header = () => {
                     </li>
                     <li class="nav-item d-none d-sm-inline-block">
                         <a href="#" class="nav-link">Contact</a>
+                    </li>
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Menu
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="#" onClick={() => handleScreen('Screen')}>Screen</a>
+                                        <a class="dropdown-item" href="#" onClick={() => handleScreen('User Role Screen')}>User Role Screen</a>
+                                        <a class="dropdown-item" href="#" onClick={() => handleScreen('Menu Item')}>Menu Item</a>
+                                        
+                                        
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
 
@@ -82,6 +110,8 @@ const Header = () => {
                     </li>
                 </ul>
             </nav>
+
+            <MenuConfig show={show} handleClose={handleClose} text={text}/>
         </>
     );
 };

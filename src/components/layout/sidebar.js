@@ -29,7 +29,7 @@ const Sidebar = () => {
 
     useEffect(() => {
         GetMenus();
-    }, []);
+    }, [response['reload']]);
 
     const GetMenus = async () => {
         try {
@@ -49,7 +49,7 @@ const Sidebar = () => {
 
             if (result.data['status'] === 200) {
                 const menuData = result.data['mainMenus'];
-                // dispatch({ type: "RELOAD", payload: false });
+                dispatch({ type: "RELOAD", payload: false });
                 setMenus(menuData)
             }
         } catch (error) {
@@ -60,6 +60,7 @@ const Sidebar = () => {
     const handleMenu = (id, url) => {
         console.log(url)
         dispatch({ type: "LEVELMENUID", payload: id });
+        dispatch({ type: "ID", payload: 0});
     }
 
     const handleNavigate = (e, url) => {
