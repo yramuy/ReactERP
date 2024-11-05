@@ -3,13 +3,14 @@ import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import './App.css';
 import Layout from "./components/layout";
 import Dashboard from "./components/layout/dashboard";
-import Users from "./components/pages/users";
+import Users from "./components/pages/user/users";
 import Login from "./components/pages/login";
 import Logout from "./components/logout";
 import Protected from "./components/session/ProtectedRoute";
 import Employees from "./components/pages/employee/employees";
 import AddUpdateEmployee from "./components/pages/employee/saveupdateemployee";
 import employees from "./components/pages/employee/employees";
+import AddUpdateUser from "./components/pages/user/addUpdateUser";
 
 function App() {
 
@@ -24,6 +25,8 @@ function App() {
           <Route path="/employees" element={<Protected Component={employees} />} />
           <Route path="/add-employee" element={<Protected Component={AddUpdateEmployee} />} />
           <Route path="/add-employee/:empID" element={<Protected Component={AddUpdateEmployee} />} />
+          <Route path="/add-user" element={<Protected Component={AddUpdateUser} />} />
+          <Route path="/add-user/:userID" element={<Protected Component={AddUpdateUser} />} />
 
         </Routes>
       </BrowserRouter>

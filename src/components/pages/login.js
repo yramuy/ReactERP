@@ -52,6 +52,7 @@ const Login = () => {
                 sessionStorage.setItem("userRole", userData.role_name);
                 // sessionStorage.setItem("userImg", userData.image);
                 sessionStorage.setItem("email", userData.email);
+                sessionStorage.setItem("token", response.data['token']);
                 // sessionStorage.setItem("mobileno", userData.mobileno);
                 sessionStorage.setItem("isLogin", true);
                 // dispatch({ type: "MESSAGE", payload: response.data['message']});
