@@ -8,6 +8,7 @@ const Header = () => {
     const [show, setShow] = useState(false);
     const [text, setText] = useState('');
     const dispatch = useDispatch();
+    const roleID = sessionStorage.getItem('userRoleId');
 
     const handleClose = () => {
         setShow(false);
@@ -19,6 +20,8 @@ const Header = () => {
         dispatch({ type: "STATUS", payload: true });
         dispatch({ type: "ID", payload: 0 });
     }
+
+    console.log("RoleID",roleID)
 
     return (
         <>
@@ -35,24 +38,27 @@ const Header = () => {
                     <li class="nav-item d-none d-sm-inline-block">
                         <a href="#" class="nav-link">Contact</a>
                     </li>
-                    <li class="nav-item d-none d-sm-inline-block">
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav mr-auto">
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Menu
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#" onClick={() => handleScreen('Screen')}>Screen</a>
-                                        <a class="dropdown-item" href="#" onClick={() => handleScreen('User Role Screen')}>User Role Screen</a>
-                                        <a class="dropdown-item" href="#" onClick={() => handleScreen('Menu Item')}>Menu Item</a>
-                                        
-                                        
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                    {
+                        roleID === "1" && <li class="nav-item d-none d-sm-inline-block">
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Menu
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="#" onClick={() => handleScreen('Screen')}>Screen</a>
+                                            <a class="dropdown-item" href="#" onClick={() => handleScreen('User Role Screen')}>User Role Screen</a>
+                                            <a class="dropdown-item" href="#" onClick={() => handleScreen('Menu Item')}>Menu Item</a>
+
+
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    }
+
                 </ul>
 
                 {/* <!-- Right navbar links --> */}
@@ -111,7 +117,7 @@ const Header = () => {
                 </ul>
             </nav>
 
-            <MenuConfig show={show} handleClose={handleClose} text={text}/>
+            <MenuConfig show={show} handleClose={handleClose} text={text} />
         </>
     );
 };

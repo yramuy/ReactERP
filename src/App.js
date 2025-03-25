@@ -11,6 +11,8 @@ import Employees from "./components/pages/employee/employees";
 import AddUpdateEmployee from "./components/pages/employee/saveupdateemployee";
 import employees from "./components/pages/employee/employees";
 import AddUpdateUser from "./components/pages/user/addUpdateUser";
+import ReportingTo from "./components/pages/myinfo/reportingTo";
+import ApplyLeave from "./components/pages/leave/applyleave";
 
 function App() {
 
@@ -27,6 +29,8 @@ function App() {
           <Route path="/add-employee/:empID" element={<Protected Component={AddUpdateEmployee} />} />
           <Route path="/add-user" element={<Protected Component={AddUpdateUser} />} />
           <Route path="/add-user/:userID" element={<Protected Component={AddUpdateUser} />} />
+          <Route path="/reporting/:empID" element={<Protected Component={ReportingTo} />} />
+          <Route path="/applyLeave" element={<Protected Component={ApplyLeave} />} />
 
         </Routes>
       </BrowserRouter>

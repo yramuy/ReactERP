@@ -115,7 +115,7 @@ const SaveUpdateMenuItem = () => {
             isValid = false;
             errors.screenID = 'Screen is required';
         }
-        if (!formData.url) {
+        if (!formData.url && formData.parentID != "") {
             isValid = false;
             errors.url = 'Url is required';
         }

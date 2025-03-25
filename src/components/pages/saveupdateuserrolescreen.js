@@ -14,12 +14,20 @@ const SaveUpdateUserRoleScreen = () => {
         canRead: 0,
         canCreate: 0,
         canUpdate: 0,
-        canDelete: 0
+        canDelete: 0,
+        btnValue: ''
     });
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const [showSnackbar, setShowSnackbar] = useState(false);
+
+    const handleBtn = (value) => {
+        setFormData({
+            ...formData,
+            btnValue: value
+        });
+    }
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -76,7 +84,8 @@ const SaveUpdateUserRoleScreen = () => {
         e.preventDefault();
 
         if (validateForm()) {
-            dispatch({ type: 'LOADING', payload: true});
+            console.log("FormData", formData)
+            dispatch({ type: 'LOADING', payload: true });
             setLoading(true);
             let response = await axios.post('http://127.0.0.1:8000/api/create-update-screen-permission', formData, {
                 headers: {
@@ -98,7 +107,7 @@ const SaveUpdateUserRoleScreen = () => {
                     canUpdate: 0,
                     canDelete: 0
                 });
-                dispatch({ type: 'LOADING', payload: false});
+                dispatch({ type: 'LOADING', payload: false });
                 // setLoading(false);
                 dispatch({ type: "MESSAGE", payload: response.data['message'] });
 
@@ -193,10 +202,12 @@ const SaveUpdateUserRoleScreen = () => {
         });
     }
 
+
+
     return (
 
         <div className="col-4">
-            
+
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title">{PId ? 'Edit' : 'Add'} Permission</h3>
@@ -289,18 +300,16 @@ const SaveUpdateUserRoleScreen = () => {
                                     />
                                     <label class="form-check-label" for="inlineCheckbox2">Can Delete</label>
                                 </div>
+                                <input type="hidden" name="btnValue" value={formData.btnValue} />
                                 {errors.canUpdate && <div className="error">{errors.canUpdate}</div>}
                             </div>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <div>
-                            <div class="row">
-                                <div class="col-sm-1">
-                                    <button type="submit" class="btn btn-info" name="btnSave">{PId ? 'Update' : 'Save'}</button>
-                                </div>
-                            </div>
-                        </div>
+
+                        <button type="submit" class="btn btn-info" name="btnSave" onClick={() => handleBtn('update')}>{PId ? 'Update' : 'Save'}</button>
+                        {PId !== 0 && <button type="submit" class="btn btn-success ml-2" name="btnSave" onClick={() => handleBtn('copy')}>Copy Permission</button>}
+
                     </div>
                 </form>
                 <Snackbar show={showSnackbar} message={msgResponse['message']} duration={3000} />

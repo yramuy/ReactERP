@@ -50,10 +50,11 @@ const Login = () => {
                 sessionStorage.setItem("userName", userData.name);
                 sessionStorage.setItem("userRoleId", userData.role_id);
                 sessionStorage.setItem("userRole", userData.role_name);
-                // sessionStorage.setItem("userImg", userData.image);
+                sessionStorage.setItem("userImg", userData.profile_pic);
                 sessionStorage.setItem("email", userData.email);
                 sessionStorage.setItem("token", response.data['token']);
-                // sessionStorage.setItem("mobileno", userData.mobileno);
+                sessionStorage.setItem("empNumber", userData.emp_number);
+                sessionStorage.setItem("fullName", userData.emp_fullName);
                 sessionStorage.setItem("isLogin", true);
                 // dispatch({ type: "MESSAGE", payload: response.data['message']});
 
@@ -79,9 +80,10 @@ const Login = () => {
 
     return (
         <>
+            <body>
             <div class="container">
                 {loading && <div className="loader"></div>}
-                <div class="login-container">
+                <div class="login-container" style={{ backgroundColor: "grey", opacity:"0.7"}}>
                     <div class="avatar1">
                         <img src="dist/img/57857.jpg" id="logo" alt="User Image" />
                     </div>
@@ -112,6 +114,7 @@ const Login = () => {
                     </form>
                 </div>
             </div>
+            </body>
 
             <Snackbar show={showSnackbar} message={result['message']} duration={3000} />
         </>

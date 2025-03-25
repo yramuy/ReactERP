@@ -68,6 +68,12 @@ const Employees = () => {
         setDeleteShow(false);
     }
 
+    const handleName = (id, name) => {
+        console.log("Name", name);
+        navigate(`/reporting/${id}?name=${encodeURIComponent(name)}`);
+
+    }
+
     console.log("Employees", employees);
 
     return (
@@ -137,7 +143,7 @@ const Employees = () => {
                                                     <tr key={item.id}>
                                                         <td>{index + 1}</td>
                                                         <td>{item.employee_id}</td>
-                                                        <td>{item.first_name + ' ' + item.last_name}</td>
+                                                        <td><a href="#" data-toggle="tooltip" title="Reporting To" onClick={() => handleName(item.emp_number, item.first_name + ' ' + item.last_name)}>{item.first_name + ' ' + item.last_name}</a></td>
                                                         <td>{item.mobile_number}</td>
                                                         <td>{item.email}</td>
                                                         <td>{position}</td>
