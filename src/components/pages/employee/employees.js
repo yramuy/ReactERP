@@ -4,6 +4,7 @@ import Layout from "../../layout";
 import axios from 'axios'; // Make sure to import axios if you plan to fetch data
 import { useDispatch } from 'react-redux';
 import DeleteModal from '../deletemodal';
+import ContentHeader from '../../layout/content-header';
 
 const Employees = () => {
     const [employees, setEmployees] = useState([]);
@@ -79,21 +80,8 @@ const Employees = () => {
     return (
         <>
             <Layout>
-                <div className="content-header">
-                    <div className="container-fluid">
-                        <div className="row mb-2">
-                            <div className="col-sm-6">
-                                <h1 className="m-0">Employees</h1>
-                            </div>
-                            <div className="col-sm-6">
-                                <ol className="breadcrumb float-sm-right">
-                                    <li className="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li className="breadcrumb-item active">Employees</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ContentHeader title="Employees" subtitle="Employee List" />
+                
                 <section className="content">
                     <div className="container-fluid">
                         <div className="card card-info">

@@ -3,6 +3,7 @@ import Layout from "../../layout";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import ContentHeader from "../../layout/content-header";
 
 const AddUpdateEmployee = () => {
     const [employeeFormData, setEmployeeFormData] = useState({
@@ -207,21 +208,7 @@ const AddUpdateEmployee = () => {
 
     return (
         <Layout>
-            <div className="content-header">
-                <div className="container-fluid">
-                    <div className="row mb-2">
-                        <div className="col-sm-6">
-                            <h1 className="m-0">Employees</h1>
-                        </div>
-                        <div className="col-sm-6">
-                            <ol className="breadcrumb float-sm-right">
-                                <li className="breadcrumb-item"><a href="#">Home</a></li>
-                                <li className="breadcrumb-item active">Employees</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <ContentHeader title="Employees" subtitle="Add Employee" />
             <section className="content">
                 <div className="container-fluid">
                     <form method="post" onSubmit={handleSubmit} encType="multipart/form-data">

@@ -6,6 +6,7 @@ import axios from "axios";
 import { post } from "jquery";
 import { useDispatch } from "react-redux";
 import DeleteModal from "../deletemodal";
+import ContentHeader from "../../layout/content-header";
 
 const ReportingTo = () => {
 
@@ -244,22 +245,8 @@ const ReportingTo = () => {
     return (
         <>
             <Layout>
-                {/* <!-- Content Header (Page header) --> */}
-                <div class="content-header">
-                    <div class="container-fluid">
-                        <div class="row mb-2">
-                            <div class="col-sm-6">
-                                <h1 class="m-0">{name}</h1>
-                            </div>
-                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active">My Info</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
+                <ContentHeader title={name} subtitle="My Info" />
                 {/* <!-- Main content --> */}
                 <section class="content">
                     <div class="container-fluid">
@@ -294,19 +281,39 @@ const ReportingTo = () => {
                                         </div>
                                         {showSuggestions && (
 
-                                            filteredSuggestions.length ? (
-                                                filteredSuggestions.map((suggestion, index) => (
-                                                    <div className="form-group row"><div className="col-3"></div>
-                                                        <div className="col-5" key={index} onClick={() => handleSuggestionClick(suggestion.emp_number, suggestion.first_name + ' ' + suggestion.last_name)} style={textStyle}>
-                                                            {suggestion.first_name}
-                                                        </div></div>
-                                                ))
-                                            ) : (
-                                                <div className="form-group row"><div className="col-3"></div>
-                                                    <div className="col-5">
-                                                        No suggestions available
-                                                    </div></div>
-                                            )
+                                            // filteredSuggestions.length ? (
+                                            // filteredSuggestions.map((suggestion, index) => (
+                                            // <div className="form-group row"><div className="col-3"></div>
+                                            //     <div className="col-5" key={index} onClick={() => handleSuggestionClick(suggestion.emp_number, suggestion.first_name + ' ' + suggestion.last_name)} style={textStyle}>
+                                            //         {suggestion.first_name}
+                                            //     </div></div>
+                                            <div style={{ padding: '0px 10px 0px 10px', marginLeft: '13.5em'}}>
+                                                <table style={{ width: '55%' }} id="example1" className="table table-bordered table-striped">
+                                                    <tbody>
+                                                        {
+
+                                                            filteredSuggestions.length > 0 ? (
+                                                                filteredSuggestions.map((suggestion, index) => (
+                                                                    <tr key={index} className="hover-row">
+
+                                                                        <td style={{padding: '4px 4px 4px 4px'}} onClick={() => handleSuggestionClick(suggestion.emp_number, suggestion.first_name + ' ' + suggestion.last_name)}>{suggestion.first_name + ' ' + suggestion.last_name}</td>
+                                                                    </tr>
+                                                                ))
+                                                            ) : <tr>
+                                                                <td colSpan="5">No records found!</td>
+                                                            </tr>
+                                                        }
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            // ))
+                                            // ) : (
+                                            //     <div className="form-group row"><div className="col-3"></div>
+                                            //         <div className="col-5">
+                                            //             No suggestions available
+                                            //         </div></div>
+                                            // )
 
                                         )}
                                         <div className="form-group row">
