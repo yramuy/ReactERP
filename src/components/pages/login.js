@@ -59,6 +59,7 @@ const Login = () => {
                 // dispatch({ type: "MESSAGE", payload: response.data['message']});
 
                 console.log("userData : ", userData)
+                console.log("Token", response.data['token'])
                 setLoading(false);
                 navigate('/', { replace: true });
 

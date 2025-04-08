@@ -15,6 +15,7 @@ const Users = () => {
     const [show, setShow] = useState(false);
 
     useEffect(() => {
+        // console.log('sessionToken', sessionToken);
         fetchUsers();
     }, []);
 
