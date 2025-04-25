@@ -206,7 +206,7 @@ const LeaveList = () => {
                 <div className="container-fluid">
                     <div className="card card-info">
                         <div className="card-header">
-                            <h3 className="card-title">Leave List</h3>
+                            <h3 className="card-title">Subordinate Leave List</h3>
                         </div>
                         <div className="card-body">
 
