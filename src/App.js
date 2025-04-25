@@ -14,6 +14,7 @@ import AddUpdateUser from "./components/pages/user/addUpdateUser";
 import ReportingTo from "./components/pages/myinfo/reportingTo";
 import ApplyLeave from "./components/pages/leave/applyleave";
 import MyLeave from "./components/pages/leave/myleaves";
+import LeaveList from "./components/pages/leave/leavelist";
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
           <Route path="/reporting/:empID" element={<Protected Component={ReportingTo} />} />
           <Route path="/applyLeave" element={<Protected Component={ApplyLeave} />} />
           <Route path="/leaves" element={<Protected Component={MyLeave} />} />
+          <Route path="/leaveList" element={<Protected Component={LeaveList} />} />
 
         </Routes>
       </BrowserRouter>

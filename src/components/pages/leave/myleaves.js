@@ -74,7 +74,7 @@ const MyLeave = () => {
                 <div className="container-fluid">
                     <div className="card card-info">
                         <div className="card-header">
-                            <h3 className="card-title">Employee List</h3>
+                            <h3 className="card-title">My Leaves</h3>
                         </div>
                         <div className="card-body">
                             <div className="row">
